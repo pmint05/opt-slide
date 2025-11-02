@@ -265,6 +265,20 @@
 
 == Local Search <touying:hidden>
 
+#align(center)[
+  #image(
+    "images/vrptw-10.svg",
+    width: 60%,
+  )
+]
+#align(center)[
+  #image(
+    "images/vrptw-11.svg",
+    width: 80%,
+  )
+]
+#pagebreak()
+
 Với mỗi khách hàng $i$, ta định nghĩa một tập $Gamma(i)$ gồm $Gamma$ khách hàng gần $i$ nhất theo độ đo tương quan dưới đây:
 #align(center)[#block(
   stroke: 1pt + rgb("#888"),
