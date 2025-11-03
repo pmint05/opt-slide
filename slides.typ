@@ -21,12 +21,12 @@
 #show figure.caption: set text(17pt)
 
 #slide(navigation: none, progress-bar: false, self => [
-  #align(center, text(24pt, upper(strong("Sử dụng thuật toán di truyền\ngiải bài toán định tuyến xe\nvới ràng buộc thời gian")))),
+  #align(center, text(24pt, upper(strong("Sử dụng thuật toán di truyền\ngiải bài toán định tuyến xe\nvới ràng buộc thời gian"))))
   #align(center, [
     Hybrid Genetic Search for the Vehicle Routing\
     Problem with Time Windows:\
     a High-Performance Implementation
-  ]),
+  ])
   #align(center, [
     *Wouter Kool*
   ])
