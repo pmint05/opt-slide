@@ -308,7 +308,12 @@ Với mỗi khách hàng $i$, ta định nghĩa một tập $Gamma(i)$ gồm $Ga
 ]]
 #align(center)[
   #image("/images/vrptw-9.svg", width: 90%)
+]
 
+#pagebreak()
+
+#align(center)[
+  #image("/images/vrptw-14.svg", width: 130%)
 ]
 
 == Lựa chọn tham số <touying:hidden>
