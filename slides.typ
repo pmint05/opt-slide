@@ -107,7 +107,7 @@
         + $"customers" <- []$
         + $i <- "nearest/farthest customers from depot" in S$
         + *while* S is not empty:
-          + $j <- &a "customer" in S\ &"that can be add to `customers` and causes least detour distance"$
+          + $j <- &"a customer" in S\ &"that can be add to `customers` and causes least detour distance"$
           + *if* $j$ not exists:
             + break
           + add $j$ to customers, remove $j$ from $S$
@@ -306,13 +306,13 @@ Các hằng số cố định: $n^("ELITE")=4$, $n^("CLOSEST")=5$, $lambda = 40$
 
     table.cell(align: center, [#vv]),
     [],
-    [$theta = 15%, mu = 25, Gamma = 40$ tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
+    [$theta = 15%, mu = 25, Gamma = 40$, tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
     table.cell(align: center, [#xx]),
     table.cell(align: center, [#xx]),
-    [$theta = 100%, mu = 25, Gamma = 40$ tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
+    [$theta = 100%, mu = 25, Gamma = 40$, tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
     table.cell(align: center, [#xx]),
     table.cell(align: center, [#vv]),
-    [$theta = 100%, mu = 25, Gamma = 20$ tăng $mu$ và $Gamma$ lên 5 sau 20000 lần lặp],
+    [$theta = 100%, mu = 25, Gamma = 20$ ,tăng $mu$ và $Gamma$ lên 5 sau 20000 lần lặp],
   ),
 )
 
