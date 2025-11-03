@@ -107,7 +107,7 @@
         + $"customers" <- []$
         + $i <- "nearest/farthest customers from depot" in S$
         + *while* S is not empty:
-          + $j <- &a "customer" in S\ &"that can be add to `customers` and causes least detour distance"$
+          + $j <- &"a customer" in S\ &"that can be add to `customers` and causes least detour distance"$
           + *if* $j$ not exists:
             + break
           + add $j$ to customers, remove $j$ from $S$
@@ -265,6 +265,38 @@
 
 == Local Search <touying:hidden>
 
+#align(center)[
+  #image(
+    "images/vrptw-13.svg",
+    width: 150%,
+  )
+]
+
+#grid(
+  columns: (45%, auto),
+  align(left)[
+    #image(
+      "images/vrptw-10.svg",
+      width: 80%,
+    )
+  ],
+  align(left)[
+   #image(
+      "images/vrptw-11.svg",
+      width: 100%,
+    )
+  ],
+)
+
+#align(center)[
+  #image(
+    "images/vrptw-12.svg",
+    width: 110%,
+  )
+]
+
+#pagebreak()
+
 Với mỗi khách hàng $i$, ta định nghĩa một tập $Gamma(i)$ gồm $Gamma$ khách hàng gần $i$ nhất theo độ đo tương quan dưới đây:
 #align(center)[#block(
   stroke: 1pt + rgb("#888"),
@@ -276,7 +308,12 @@ Với mỗi khách hàng $i$, ta định nghĩa một tập $Gamma(i)$ gồm $Ga
 ]]
 #align(center)[
   #image("/images/vrptw-9.svg", width: 90%)
+]
 
+#pagebreak()
+
+#align(center)[
+  #image("/images/vrptw-14.svg", width: 130%)
 ]
 
 == Lựa chọn tham số <touying:hidden>
@@ -306,13 +343,13 @@ Các hằng số cố định: $n^("ELITE")=4$, $n^("CLOSEST")=5$, $lambda = 40$
 
     table.cell(align: center, [#vv]),
     [],
-    [$theta = 15%, mu = 25, Gamma = 40$ tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
+    [$theta = 15%, mu = 25, Gamma = 40$, tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
     table.cell(align: center, [#xx]),
     table.cell(align: center, [#xx]),
-    [$theta = 100%, mu = 25, Gamma = 40$ tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
+    [$theta = 100%, mu = 25, Gamma = 40$, tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
     table.cell(align: center, [#xx]),
     table.cell(align: center, [#vv]),
-    [$theta = 100%, mu = 25, Gamma = 20$ tăng $mu$ và $Gamma$ lên 5 sau 20000 lần lặp],
+    [$theta = 100%, mu = 25, Gamma = 20$ ,tăng $mu$ và $Gamma$ lên 5 sau 20000 lần lặp],
   ),
 )
 
