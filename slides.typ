@@ -21,7 +21,9 @@
 #show figure.caption: set text(17pt)
 
 #slide(navigation: none, progress-bar: false, self => [
-  #align(center, text(24pt, upper(strong("Sử dụng thuật toán di truyền\ngiải bài toán định tuyến xe\nvới ràng buộc thời gian"))))
+  #align(center, text(24pt, upper(
+    strong("Sử dụng thuật toán di truyền\ngiải bài toán định tuyến xe\nvới ràng buộc thời gian"),
+  )))
   #align(center, [
     Hybrid Genetic Search for the Vehicle Routing\
     Problem with Time Windows:\
@@ -43,7 +45,7 @@
 == Bài toán <touying:hidden>
 
 #align(center)[
-  #image("images/vrptw-1.svg", width: 90%)
+  #image("images/vrptw-1.svg", width: 80%)
 ]
 == Các nghiên cứu liên quan <touying:hidden>
 #align(center)[
@@ -61,7 +63,7 @@
   ],
   align(left)[
     #set par(leading: 1.6em)
-    $r = (sigma_0^r, sigma_1^r, dots, sigma_n^r, sigma_(n+1)^r)$\
+    $r = (sigma_0^r, sigma_1^r, dots, sigma_n^r, sigma_(n_r+1)^r)$\
     $bold(t)^r = (t_0^r, ..., t_(n_r+1)^r)$\
     $"tw"_(i,i+1) = max(t_i^r + tau_(sigma_i^r) + delta_(sigma_i^r sigma_(i+1)^r) - t_(i+1)^r, 0)$\
   ],
@@ -90,7 +92,8 @@
 
 == Heuristic kiến trúc <touying:hidden>
 
-#[
+
+#let nf_code = [
   #set text(size: 18pt)
   #figure(
     kind: "algorithm",
@@ -103,19 +106,32 @@
     )[
       + $S = {1, 2, 3, ..., n}$
       + $"solutions" <- []$
-      + *for* $t = 1$ to $m$:
+      + *for* $t = 1$ *to* $m$:
         + $"customers" <- []$
         + $i <- "nearest/farthest customers from depot" in S$
-        + *while* S is not empty:
-          + $j <- &"a customer" in S\ &"that can be add to `customers` and causes least detour distance"$
+        + *while* $S$ is not empty:
+          + $j <- & "a customer" in S "that can be add to" #[`customers`] "and" \ & "causes least detour distance"$
           + *if* $j$ not exists:
-            + break
+            + *break*
           + add $j$ to customers, remove $j$ from $S$
-
         + add customers to solutions
     ],
   )
 ]
+
+#grid(
+  columns: (auto, 25%),
+  gutter: 1em,
+  align(left)[
+    #nf_code
+  ],
+  align(right)[
+    #figure(
+      image("images/vrptw-19-portrait.jpg", width: 90%),
+      caption: text(size: 16pt, [Illustration of one insertion in insert method]),
+    )
+  ],
+)
 
 == Sweep <touying:hidden>
 
@@ -124,6 +140,14 @@
 - Với mỗi chuyến đi:
   - Sắp xếp các khách hàng có time window ngắn (< 50%) tăng dần theo $l_i$
   - Chèn lại các khách hàng có time window dài sao cho khoảng cách tăng là ít nhất.
+
+#figure(
+  image(
+    "images/vrptw-15.svg",
+    height: 52%,
+  ),
+  caption: [Minh họa thuật toán Sweep],
+)
 
 == Lai tạo <touying:hidden>
 
@@ -281,7 +305,7 @@
     )
   ],
   align(left)[
-   #image(
+    #image(
       "images/vrptw-11.svg",
       width: 100%,
     )
@@ -346,10 +370,10 @@ Các hằng số cố định: $n^("ELITE")=4$, $n^("CLOSEST")=5$, $lambda = 40$
     [$theta = 15%, mu = 25, Gamma = 40$, tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
     table.cell(align: center, [#xx]),
     table.cell(align: center, [#xx]),
-    [$theta = 100%, mu = 25, Gamma = 40$, tăng $mu$ và $Gamma$ lên 5 sau 10000 lần lặp],
+    [$theta = 100%, mu = 25, Gamma = 40$, tăng $mu$ lên 5 sau 10000 lần lặp],
     table.cell(align: center, [#xx]),
     table.cell(align: center, [#vv]),
-    [$theta = 100%, mu = 25, Gamma = 20$ ,tăng $mu$ và $Gamma$ lên 5 sau 20000 lần lặp],
+    [$theta = 100%, mu = 25, Gamma = 20$ ,tăng $mu$ lên 5 sau 20000 lần lặp],
   ),
 )
 
