@@ -94,7 +94,7 @@
 
 
 #let nf_code = [
-  #set text(size: 18pt)
+  #set text(size: 14pt)
   #figure(
     kind: "algorithm",
     supplement: [Algorithm],
@@ -107,14 +107,18 @@
       + $S = {1, 2, 3, ..., n}$
       + $"solutions" <- []$
       + *for* $t = 1$ *to* $m$:
-        + $"customers" <- []$
+        + *if* S is empty:
+          + *break*
         + $i <- "nearest/farthest customers from depot" in S$
+        + $"customers" <- [i]$
+        + remove $i$ from S
         + *while* $S$ is not empty:
-          + $j <- & "a customer" in S "that can be add to" #[`customers`] "and" \ & "causes least detour distance"$
+          + $j, p <- "a customer" in S "that can be add to" #[`customers`] & \ "at" p "and causes least detour distance"$
           + *if* $j$ not exists:
-            + *break*
-          + add $j$ to customers, remove $j$ from $S$
-        + add customers to solutions
+            + break
+          + insert $j$ into customers at $p$
+          + remove $j$ from $S$
+        + append customers to solutions
     ],
   )
 ]
@@ -128,7 +132,7 @@
   align(right)[
     #figure(
       image("images/vrptw-19-portrait.jpg", width: 90%),
-      caption: text(size: 16pt, [Illustration of one insertion in insert method]),
+      caption: text(size: 16pt, [Minh hoạ \ thuật toán chèn]),
     )
   ],
 )
@@ -269,7 +273,7 @@
           + $italic("pred")[t] <- italic("front")$
           + *if* $t < n$ *then*
             + *if not* $italic("dominates")(italic("back"), t)$ *then*
-              + *while* $|S| > 0$ *and* $italic("dominates")(italic("back"), t)$ *do*
+              + *while* $|S| > 0$ *and* $italic("dominates")(t, italic("back"))$ *do*
                 + $italic("popBack")()$
               + $italic("pushBack")(t)$
             + *while* $|S| > 1$ *and* $p[italic("front")] + f(italic("front"), t + 1) >= p[italic("front2")] + f(italic("front2"), t + 1)$

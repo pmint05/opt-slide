@@ -11,6 +11,8 @@ Bài báo giới thiệu một cách triển khai thuật toán Hybrid Genetic S
 
 Đây không phải là một công trình được công bố trên tạp chí học thuật chính quy, mà là một bản tổng hợp và cải tiến từ các nghiên cứu trước đó. Các thuật toán được triển khai và thử nghiệm trên bộ dữ liệu VRPTW của cuộc thi DIMACS lần thứ 12, và bộ giải này đạt hạng nhất trong giai đoạn đầu của hạng mục VRPTW.
 
+
+
 == Bài toán
 
 Cho $G=(V,E)$ là một đồ thị đầy đủ có hướng. 
@@ -24,7 +26,7 @@ Một hành trình khả thi $r$ được định nghĩa là một chu trình tr
 Bài toán VRPTW hướng đến việc xây dựng $m$ chuyến đi cho các xe để thăm các đỉnh đúng một lần trong khoảng thời gian cho phép, và cực tiểu hoá tổng khoảng cách đã di chuyển.
 
 #figure(
-  image("images/vrptw-1.svg", width: 60%),
+  image("images/vrptw-1.svg", width: 100%),
 ) <glacier>
 
 
@@ -36,7 +38,7 @@ Bài toán VRPTW hướng đến việc xây dựng $m$ chuyến đi cho các xe
 
 == Hàm mục tiêu
 
-Xét một hành trình $r$, xuất phát từ $v_0$ $(sigma_0^r = 0)$, thăm $n_r$ khách hàng $(sigma_1^r, ..., sigma_(n_r)^r)$, sau đó quay trở lại điểm xuất phát $sigma_(n_r+1)^r=0$. Gọi $bold(t)^r = (t_0^r, ..., t_(n_r+1)^r)$ là thời điểm ta phục vụ điểm thứ $i$. Đường đi từ đỉnh $sigma_(i)^r$ đến $sigma_(i+1)^r$ sẽ gây ra độ trễ (time warp, nghĩa là thời gian vượt quá khả năng chờ của khách hàng) là $"tw"_(i,i+1) = max(t_i^r + tau_(sigma_i^r) + delta_(sigma_i^r sigma_(i+1)^r) - t_(i+1)^r, 0)$.
+Xét một hành trình $r$, xuất phát từ $v_0$ $(sigma_0^r = 0)$, thăm $n_r$ khách hàng $(sigma_1^r, ..., sigma_(n_r)^r)$, sau đó quay trở lại điểm xuất phát $sigma_(n_r+1)^r=0$. Gọi $bold(t)^r = (t_0^r, ..., t_(n_r+1)^r)$ là thời điểm ta phục vụ điểm thứ $i$. Đường đi từ đỉnh $sigma_(i)^r$ đến $sigma_(i+1)^r$ sẽ gây ra độ trễ (time warp, nghĩa là thời gian vượt quá khả năng chờ của khách hàng) là $"tw"_(i,i+1) = max(t_i^r + tau_(sigma_i^r) + delta_(sigma_i^r sigma_(i+1)^r) - t_(i+1)^r, 0)$. Ta sẽ coi như tài xế chấp nhận việc trả một lượng chi phí là $"tw"_(i,i+1)$ để quay lại phục vụ khách hàng thứ $i+1$ tại thời điểm $l_(i+1)$
 
 Các đại lượng sau đây đặc trưng cho tuyến đường $r$:
 - Trọng tải $q(r) = sum_(i=1)^(n_r) q_(sigma_i^r)$
@@ -49,7 +51,10 @@ $phi(r) = c_r + omega^Q max(0, q(r)-Q) + omega^("TW") "tw"(r)$
 
 Trong đó $omega$ là các hệ số phạt tương ứng cho độ trễ và trọng tải thừa
 
-#image("images/vrptw-3.svg", width:50%)
+
+#figure(
+  image("images/vrptw-3.svg", width: 50%),
+) <glacier>
 
 == Tổng quan
 
@@ -73,16 +78,21 @@ S = {1, 2, 3, ..., n}
 solutions <- []
 
 for t = 1 to m:
-	customers <- []
+  if S is empty:
+    break
 	
 	i <- nearest/farthest customers from depot in S
+	customers <- [i]
+  remove i from S
+
 	while S is not empty:
-		j <- a customer in S that can be add to `customers` and causes least detour distance
+		j, p <- a customer in S that can be add to `customers` at p and causes least detour distance
 		if j not exists:
 			break
-		add j to customers, remove j from S
+    insert best j into customers at p
+    remove j from S
 
-	add customers to solutions
+	append customers to solutions
 ```
 
 === _sweep_
@@ -100,7 +110,7 @@ Lưu ý thuật toán có thể cho ra các cấu hình vi phạm ràng buộc v
 === Lựa chọn cha mẹ
 
 #figure(
-  image("images/vrptw-4.svg", width: 60%)
+  image("images/vrptw-4.svg", width: 80%)
 )
 
 Để chọn một lời giải, thuật toán thực hiện "binary tournament" để lựa chọn, cụ thể như sau:
@@ -119,7 +129,9 @@ Trong đó:
 - $f_P^("DIV")(S)$ là "hạng" của lời giải $S$, khi xét khả năng mở rộng (diversity contribution)
   - Có nhiều cách tính độ tốt khi xét đến khả năng mở rộng, nhưng theo thực nghiệm thì tốt nhất là sử dụng "broken pairs distance"
   - Broken pairs distance của một cặp $A$ và $B$ được tính bằng số cặp $(i, j)$ kề nhau trong $A$ nhưng *không* kề nhau trong $B$ (tính cả depot).
-  #image("images/vrptw-6.svg")
+  #figure(
+    image("images/vrptw-6.svg", width: 60%)
+  )
   
   - Khả năng mở rộng của lời giải S, được tính bằng trung bình các broken pair distance từ S đến $n^("CLOSEST")$ lời giải có BPS đến S là nhỏ nhất.
   $Delta(S) = 1/(n^("CLOSEST")) sum_(S_2) delta(S, S_2)$
@@ -130,7 +142,9 @@ Trong đó:
 
 *Toán tử tương giao chéo (Crossover operator)*. Xem lời giải như một hoán vị độ dài $n$. Chọn ngẫu nhiên một đoạn con $[l, r]$ của cha, và đưa đoạn này vào lời giải của con. Sau đó, xuất phát từ $r+1$, ta lần lượt đưa các nút chưa được sử dụng theo thứ tự xuất hiện trong lời giải mẹ vào lời giải con.
 
-#image("images/vrptw-7.svg")
+#figure(
+  image("images/vrptw-7.svg", width: 70%)
+)
 
 Toán tử tương giao chéo này được thực hiện mà không xét đến các ràng buộc về khối lượng, thời gian hay về depot. Vì vậy, từ hoán vị đã tương giao, ta sử dụng thuật toán SPLIT để chia hoán vị đã tương giao về các xe khác nhau sao cho thoả mãn ràng buộc về trọng lượng.
 
