@@ -107,7 +107,7 @@
       + $S = {1, 2, 3, ..., n}$
       + $"solutions" <- []$
       + *for* $t = 1$ *to* $m$:
-        + *if* S is empty:
+        + *if* $S$ is empty:
           + *break*
         + $i <- "nearest/farthest customers from depot" in S$
         + $"customers" <- [i]$
