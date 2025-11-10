@@ -8,11 +8,6 @@
 #show: stargazer-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    // subtitle: [vehicle routing problem with time windows],
-    // author: [Huỳnh Tiến Dũng],
-    // instructor: [TS. Hoàng Thị Điệp],
-    // date: "17/12/2024",
-    // institution: [Trường Đại học Công Nghệ - ĐHQGHN],
   ),
 )
 #set text(font: "New Computer Modern", lang: "vi")
@@ -336,7 +331,7 @@ Với mỗi khách hàng $i$, ta định nghĩa một tập $Gamma(i)$ gồm $Ga
   $
 ]]
 #align(center)[
-  #image("/images/vrptw-9.svg", width: 90%)
+  #image("/images/vrptw-9.svg", width: 80%)
 ]
 
 #pagebreak()
