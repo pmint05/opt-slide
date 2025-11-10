@@ -301,14 +301,15 @@
 ]
 
 #grid(
-  columns: (45%, auto),
+  columns: (40%, auto),
   align(left)[
     #image(
       "images/vrptw-10.svg",
-      width: 80%,
+      width: 85%,
     )
   ],
   align(left)[
+    #v(-0.1cm)
     #image(
       "images/vrptw-11.svg",
       width: 100%,
