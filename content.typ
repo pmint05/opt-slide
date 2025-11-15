@@ -78,26 +78,22 @@ S = {1, 2, 3, ..., n}
 solutions <- []
 
 for t = 1 to m:
-  if S is empty:
-    break
+	customers <- []
 	
 	i <- nearest/farthest customers from depot in S
-	customers <- [i]
-  remove i from S
-
 	while S is not empty:
-		j, p <- a customer in S that can be add to `customers` at p and causes least detour distance
+		j <- a customer in S that can be add to `customers` and causes least detour distance
 		if j not exists:
 			break
-    insert best j into customers at p
-    remove j from S
+		add j to customers, remove j from S
 
-	append customers to solutions
+	add customers to solutions
 ```
 
 === _sweep_
 
 - Sắp xếp các khách hàng theo góc giữa nó và điểm xuất phát.
+  - Góc ở đây được hiểu là góc cực (polar angle) giữa 2 điểm, được tính bằng công thức $"atan2"(y_2 - y_1, x_2 - x_1)$
 - Thêm các khách hàng cho đến khi quá trọng tải.
 - Với mỗi chuyến đi:
   - Sắp xếp các khách hàng có time window ngắn (< 50%) tăng dần theo $l_i$
